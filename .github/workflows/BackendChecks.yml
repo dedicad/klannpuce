@@ -1,0 +1,39 @@
+name: Checks for backend
+
+on:
+  pull_request:
+    paths:
+      - 'back/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install modules and Lint code
+        run: |
+          cd back/
+          yarn
+          yarn lint
+        env:
+          CI: true
+      - name: Test code
+        run: |
+          cd back/
+          yarn test
+        env:
+          CI: true
+      - name: Audit code
+        run: |
+          cd back/
+          yarn audit
+        env:
+          CI: true
