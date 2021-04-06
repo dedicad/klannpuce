@@ -18,11 +18,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install modules and Lint code
+      - name: Install modules
         run: |
           cd front/
           yarn
-          yarn lint
         env:
           CI: true
       - name: Test code
