@@ -17,13 +17,12 @@ export class SubjectsService {
     subject.name = createSubjectDto.name;
     subject.description = createSubjectDto.description;
 
-    subject.tasks = createSubjectDto.tasks.map(createTaskDto => {
+    subject.tasks = createSubjectDto.tasks.map((createTaskDto) => {
       const task = new Task();
-      task.name = createTaskDto.name
-      task.description = createTaskDto.description
-
-      this.taskRepository.save(task)
-      return task
+      task.name = createTaskDto.name;
+      task.description = createTaskDto.description;
+      task.level = createTaskDto.level;
+      return task;
     });
 
     return this.subjectRepository.save(subject);
@@ -34,14 +33,11 @@ export class SubjectsService {
   }
 
   async findOne(_id: number) {
-    return await this.subjectRepository.find(
-      {
-        relations: ['tasks'],
-        select: ['name', 'description'],
-        where: [{ id: _id }],
-      }
-    );
-
+    return await this.subjectRepository.find({
+      relations: ['tasks'],
+      select: ['name', 'description'],
+      where: [{ id: _id }],
+    });
   }
 
   update(id: number, updateSubjectDto: UpdateSubjectDto) {

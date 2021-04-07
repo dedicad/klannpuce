@@ -8,6 +8,6 @@ import { Task } from './entities/task.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Subject, Task])],
   controllers: [SubjectsController],
-  providers: [SubjectsService]
+  providers: [SubjectsService],
 })
 export class SubjectsModule {}

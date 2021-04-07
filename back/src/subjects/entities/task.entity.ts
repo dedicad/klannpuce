@@ -19,6 +19,9 @@ export class Task {
   @Column('varchar', { length: 500 })
   description: string;
 
+  @Column('int')
+  level: number;
+
   @ManyToOne((type) => Subject, (subject) => subject.tasks, {
     cascade: ['insert'],
   })
