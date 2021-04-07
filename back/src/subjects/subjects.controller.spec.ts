@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Subject } from './entities/subject.entity';
+import { Task } from './entities/task.entity';
 import { SubjectsController } from './subjects.controller';
 import { SubjectsService } from './subjects.service';
 
@@ -14,6 +15,10 @@ describe('SubjectsController', () => {
       providers: [
         {
           provide: getRepositoryToken(Subject),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(Task),
           useClass: Repository,
         },
         SubjectsService,
