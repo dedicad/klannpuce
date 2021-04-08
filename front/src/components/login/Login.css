@@ -1,0 +1,27 @@
+.login-div {
+    color: white;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    background-color: rgb(16, 16, 16);
+    width: 30%;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+#login-textfield {
+    width: 35%;
+}
+
+#sign-in-button {
+    margin-top: 15px;
+}
