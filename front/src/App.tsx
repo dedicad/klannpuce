@@ -8,13 +8,9 @@ import {
 } from "react-router-dom";
 
 import Login from "./components/login/Login";
-<<<<<<< HEAD
-import SubjectCard from './components/subjectCard/SubjectCard';
-import NewSubjectForm from './components/newSubjectForm/NewSubjectForm';
-=======
 import Navbar from "./components/navbar/Navbar";
 import SubjectCard from './components/subjectCard/SubjectCard';
->>>>>>> Add card template page at /card
+import NewSubjectForm from './components/newSubjectForm/NewSubjectForm';
 
 function App() {
   return (
@@ -22,12 +18,9 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-<<<<<<< HEAD
           <Route path="/form">
             <NewSubjectForm />
           </Route>
-=======
->>>>>>> Add card template page at /card
           <Route path="/card">
             <SubjectCard />
           </Route>
