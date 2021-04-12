@@ -10,7 +10,7 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
-import { UserDecorator } from './user.decorator'
+import { UserDecorator } from './user.decorator';
 
 @Controller('users')
 export class UsersController {
