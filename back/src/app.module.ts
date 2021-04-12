@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SubjectsModule } from './subjects/subjects.module';
 import { AdvancementsModule } from './advancements/advancements.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { AdvancementsModule } from './advancements/advancements.module';
     UsersModule,
     SubjectsModule,
     AdvancementsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

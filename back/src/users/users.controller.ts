@@ -15,9 +15,14 @@ import { User } from './entities/user.entity';
 export class UsersController {
   constructor(private service: UsersService) {}
 
-  @Get(':id')
+  @Get('')
+  getAll() {
+    return this.service.findAll();
+  }
+
+  @Get(':email')
   get(@Param() params) {
-    return this.service.findOne(params.id);
+    return this.service.findOne(params.email);
   }
 
   @Post()
