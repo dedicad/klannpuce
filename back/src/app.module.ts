@@ -7,7 +7,12 @@ import { SubjectsModule } from './subjects/subjects.module';
 import { AdvancementsModule } from './advancements/advancements.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule, SubjectsModule, AdvancementsModule],
+  imports: [
+    TypeOrmModule.forRoot(),
+    UsersModule,
+    SubjectsModule,
+    AdvancementsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
