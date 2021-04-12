@@ -10,7 +10,6 @@ import { Task } from './entities/task.entity';
 export class SubjectsService {
   constructor(
     @InjectRepository(Subject) private subjectRepository: Repository<Subject>,
-    @InjectRepository(Task) private taskRepository: Repository<Task>,
   ) {}
   create(createSubjectDto: CreateSubjectDto): Promise<Subject> {
     const subject = new Subject();
