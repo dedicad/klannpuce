@@ -10,14 +10,20 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
+import { UserDecorator } from './user.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private service: UsersService) {}
 
-  @Get(':id')
+  @Get('')
+  getAll(@UserDecorator() user: User) {
+    return this.service.findAll(user);
+  }
+
+  @Get(':email')
   get(@Param() params) {
-    return this.service.findOne(params.id);
+    return this.service.findOne(params.email);
   }
 
   @Post()
