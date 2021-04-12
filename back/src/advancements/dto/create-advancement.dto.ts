@@ -1,4 +1,4 @@
 export class CreateAdvancementDto {
-    userId: number;
-    taskId: number;
+  userId: number;
+  taskId: number;
 }

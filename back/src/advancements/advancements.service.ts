@@ -8,7 +8,8 @@ import { Advancement } from './entities/advancement.entity';
 @Injectable()
 export class AdvancementsService {
   constructor(
-    @InjectRepository(Advancement) private advancementRepository: Repository<Advancement>,
+    @InjectRepository(Advancement)
+    private advancementRepository: Repository<Advancement>,
   ) {}
   create(createAdvancementDto: CreateAdvancementDto): Promise<Advancement> {
     // Todo : It would be better to check if the taskId exists
@@ -18,14 +19,13 @@ export class AdvancementsService {
     advancement.taskId = createAdvancementDto.taskId;
 
     return this.advancementRepository.save(advancement);
-    };
-
+  }
 
   async findAll() {
-    return await this.advancementRepository.find(
+    return await this.advancementRepository
+      .find
       // {      where: [{userId: }]} TODO : user userId from auth Middleware
-      );
-
+      ();
   }
 
   findOne(id: number) {
