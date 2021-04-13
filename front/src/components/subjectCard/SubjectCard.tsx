@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 
 import {
     Card,
@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import './SubjectCard.css';
+import axios from '../../config/axios';
 
 const theme = createMuiTheme({
     overrides: {
@@ -25,8 +26,16 @@ const theme = createMuiTheme({
         },
     },
 });
+interface SubjectCardProps {}
 
-class SubjectCard extends PureComponent {
+interface SubjectCardState {
+    disabled: boolean;
+}
+class SubjectCard extends PureComponent<SubjectCardProps, SubjectCardState> {
+    state: SubjectCardState = {
+        disabled: false,
+    };
+
     subject = {
         name: 'Sécurité OS3',
         description: 'quick quzzzqzdqzdizzcaeaqzk no security',
@@ -67,11 +76,38 @@ class SubjectCard extends PureComponent {
         createdAt: '2021-04-13T13:30:11.789Z',
     };
 
-    toggleValidation(index: number) {
+    async toggleValidation(taskId: number, index: number) {
+        console.log('clicked !');
+        if (this.subject.tasks[index].advancements.length === 0) {
+            // If it was originally unchecked we send a request to validate
+            this.setState({ disabled: true });
 
-        if (this.subject.tasks[index].advancements.length){
-            // If it was originally checked we send a request to validate
+            try {
+                await axios.post('/advancements', {
+                    taskId,
+                });
+            } catch (err: any) {
+                console.error(
+                    'There was an error, that we should handle more properly'
+                );
+                console.error(err);
+            } finally {
+                this.setState({ disabled: false });
+            }
+        } else {
+            const advancementId = this.subject.tasks[index].advancements[0].id;
+            this.setState({ disabled: true });
 
+            try {
+                await axios.delete('/advancements/' + advancementId);
+            } catch (err: any) {
+                console.error(
+                    'There was an error, that we should handle more properly'
+                );
+                console.error(err);
+            } finally {
+                this.setState({ disabled: false });
+            }
         }
 
         // Otherwise when send a request to uncheck
@@ -84,11 +120,12 @@ class SubjectCard extends PureComponent {
                     <Checkbox
                         color='primary'
                         disableRipple
-                        onClick={()=> this.toggleValidation(index)}
+                        onClick={() => this.toggleValidation(task.id, index)}
                         checked={task.advancements.length > 0}
+                        disabled={this.state.disabled}
                     />
                 </Tooltip>
-                {task.name} 
+                {task.name}
             </li>
         );
     });
