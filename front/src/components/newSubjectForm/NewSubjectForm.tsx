@@ -56,11 +56,11 @@ export default function NewSubjectForm() {
         let tasks: any = [];
         Object.keys(data).filter(function (k) {
             return k.indexOf('Task-') === 0;
-        }).map(key => {
+        }).map((key, i) => {
             tasks.push({
                 "name": data[key],
                 "description": "Not necessary",
-                "level": "0"
+                "level": i
             })
             return null
         })
