@@ -13,6 +13,7 @@ import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { UserDecorator } from './user.decorator';
 import { Roles } from 'src/auth/roles.decorators';
+import { Public } from 'src/auth/constants';
 
 @Controller('users')
 export class UsersController {
@@ -29,7 +30,7 @@ export class UsersController {
   }
 
   @Post()
-  @Roles('student')
+  @Roles('admin')
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.service.create(createUserDto);
   }

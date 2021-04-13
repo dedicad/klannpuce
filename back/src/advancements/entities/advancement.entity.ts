@@ -1,8 +1,12 @@
+import { Task } from 'src/subjects/entities/task.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity()
@@ -10,10 +14,12 @@ export class Advancement {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('int')
+  @ManyToOne((type) => User, (user) => user.id)
+  @JoinColumn()
   userId: number;
 
-  @Column('int')
+  @ManyToOne((type) => Task, (task) => task.id)
+  @JoinColumn()
   taskId: number;
 
   /**

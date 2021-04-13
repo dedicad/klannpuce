@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AdvancementsService } from 'src/advancements/advancements.service';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateSubjectDto } from './dto/create-subject.dto';
@@ -11,6 +12,7 @@ import { Task } from './entities/task.entity';
 export class SubjectsService {
   constructor(
     @InjectRepository(Subject) private subjectRepository: Repository<Subject>,
+    private readonly advancementsService: AdvancementsService,
   ) {}
   create(createSubjectDto: CreateSubjectDto, user: User): Promise<Subject> {
     const subject = new Subject();
@@ -29,10 +31,28 @@ export class SubjectsService {
     return this.subjectRepository.save(subject);
   }
 
-  async findAll(): Promise<Subject[]> {
-    return await this.subjectRepository.find({
+  async findAll(user: User): Promise<Subject[]> {
+    const subjects = await this.subjectRepository.find({
       relations: ['tasks'],
       select: ['name', 'description', 'author'],
+    });
+    // Not optimal but I had trouble realizing it fully with TypeOrm
+    const advancements = (await this.advancementsService.findAll(user)).map(
+      (advancement) => advancement.id,
+    );
+
+    return subjects.map((subject) => {
+      return {
+        ...subject,
+        tasks: subject.tasks.map((task) => {
+          return {
+            ...task,
+            advancements: task.advancements.filter((advancement) =>
+              advancements.includes(advancement.id),
+            ),
+          };
+        }),
+      };
     });
   }
 
