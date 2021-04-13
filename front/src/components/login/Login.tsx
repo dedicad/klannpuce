@@ -27,14 +27,6 @@ function Login() {
                 const access_token = response.data.access_token;
                 console.log(`Access Token: ${access_token}`);
                 axios.defaults.headers.common['Authorization'] = `bearer ${access_token}`;
-                const config = {
-                    method: 'get',
-                    url: 'http://localhost:8000/users',
-                };
-
-                axios(config).then(function (response: any) {
-                    console.log(JSON.stringify(response.data));
-                })
             })
             .catch(function (error: any) {
                 console.log(error);
