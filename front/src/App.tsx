@@ -9,15 +9,21 @@ import {
 
 import Login from "./components/login/Login";
 import Navbar from "./components/navbar/Navbar";
+import SubjectCard from './components/subjectCard/SubjectCard';
+import NewSubjectForm from './components/newSubjectForm/NewSubjectForm';
 
 function App() {
   return (
 
     <div className="App">
       <Router>
-        {/* <Navbar></Navbar> */}
-
         <Switch>
+          <Route path="/form">
+            <NewSubjectForm />
+          </Route>
+          <Route path="/card">
+            <SubjectCard />
+          </Route>
           <Route path="/login">
             <Login />
           </Route>
