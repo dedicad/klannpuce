@@ -31,7 +31,6 @@ export class SubjectsService {
     return this.subjectRepository.save(subject);
   }
 
-
   async exists(name: string): Promise<boolean> {
     return (await this.subjectRepository.count({ where: { name: name } })) > 0;
   }

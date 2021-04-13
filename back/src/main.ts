@@ -4,7 +4,10 @@ import * as helmet from 'helmet';
 import { UsersService } from './users/users.service';
 import { CreateUserDto } from './users/dto/create-user.dto';
 import { teacher, student, admin } from './populate-db-init/initial-users';
-import { intrusionDetection, reverseEngineering } from './populate-db-init/initial-subjects';
+import {
+  intrusionDetection,
+  reverseEngineering,
+} from './populate-db-init/initial-subjects';
 import { CreateSubjectDto } from './subjects/dto/create-subject.dto';
 import { SubjectsService } from './subjects/subjects.service';
 
@@ -14,8 +17,9 @@ async function upsertUser(userService, newUser: CreateUserDto) {
 }
 
 async function upsertSubject(subjetService, newSubject: CreateSubjectDto) {
-  if (!(await subjetService.exists(newSubject.name))){
-    await subjetService.create(newSubject, teacher);}
+  if (!(await subjetService.exists(newSubject.name))) {
+    await subjetService.create(newSubject, teacher);
+  }
 }
 
 async function bootstrap() {
@@ -32,7 +36,5 @@ async function bootstrap() {
 
   await upsertSubject(subjetService, reverseEngineering);
   await upsertSubject(subjetService, intrusionDetection);
-
-  
 }
 bootstrap();
