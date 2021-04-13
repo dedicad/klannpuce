@@ -14,7 +14,7 @@ function Login() {
 
         const config = {
             method: 'post',
-            url: 'http://localhost:8000/auth/login',
+            url: 'auth/login',
             headers: {
                 'Content-Type': 'application/json',
             },
