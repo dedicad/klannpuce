@@ -18,7 +18,6 @@ export class SubjectsService {
     subject.description = createSubjectDto.description;
     subject.author = user.name;
 
-
     subject.tasks = createSubjectDto.tasks.map((createTaskDto) => {
       const task = new Task();
       task.name = createTaskDto.name;
@@ -26,7 +25,7 @@ export class SubjectsService {
       task.level = createTaskDto.level;
       return task;
     });
-    
+
     return this.subjectRepository.save(subject);
   }
 

@@ -27,8 +27,6 @@ export class Subject {
   })
   tasks: Task[];
 
-
-
   /**
    * DB insert time.
    */

@@ -18,7 +18,10 @@ export class SubjectsController {
   constructor(private readonly subjectsService: SubjectsService) {}
 
   @Post()
-  create(@Body() createSubjectDto: CreateSubjectDto, @UserDecorator() user: User) {
+  create(
+    @Body() createSubjectDto: CreateSubjectDto,
+    @UserDecorator() user: User,
+  ) {
     return this.subjectsService.create(createSubjectDto, user);
   }
 
