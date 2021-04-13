@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { User } from 'src/users/entities/user.entity';
 import { UserDecorator } from 'src/users/user.decorator';
 import { AdvancementsService } from './advancements.service';
@@ -18,6 +19,7 @@ export class AdvancementsController {
   constructor(private readonly advancementsService: AdvancementsService) {}
 
   @Post()
+  @Throttle(150, 60)
   create(
     @Body() createAdvancementDto: CreateAdvancementDto,
     @UserDecorator() user: User,
@@ -44,6 +46,7 @@ export class AdvancementsController {
   }
 
   @Delete(':id')
+  @Throttle(150, 60)
   remove(@Param('id') id: string, @UserDecorator() user: User) {
     return this.advancementsService.remove(+id, user);
   }
