@@ -28,13 +28,42 @@ const theme = createMuiTheme({
 });
 interface SubjectCardProps {}
 
+interface Advancement {
+    id: number;
+    taskId: number;
+    createdAt: Date;
+}
+interface Task {
+    id: number;
+    name: string;
+    description: string;
+    level: number;
+    createdAd: Date;
+    advancements: Advancement[];
+}
+interface Subject {
+    name: string;
+    description: string;
+    author: string;
+    tasks: Task[];
+}
 interface SubjectCardState {
     disabled: boolean;
+    ready: boolean;
+    subjects: Subject[];
 }
 class SubjectCard extends PureComponent<SubjectCardProps, SubjectCardState> {
-    state: SubjectCardState = {
+    state = {
         disabled: false,
-    };
+        ready: false,
+    } as SubjectCardState;
+
+    componentDidMount() {
+        axios
+            .get('/subjects')
+            .then((res: any) => this.setState({ subjects: res.data, ready: true }))
+            .catch((err: any) => console.error(err));
+    }
 
     subject = {
         name: 'Sécurité OS3',
@@ -131,7 +160,7 @@ class SubjectCard extends PureComponent<SubjectCardProps, SubjectCardState> {
     });
 
     render() {
-        return (
+        return this.state.ready ? (
             <Grid
                 className='full-height'
                 container
@@ -157,6 +186,8 @@ class SubjectCard extends PureComponent<SubjectCardProps, SubjectCardState> {
                     </CardActions>
                 </Card>
             </Grid>
+        ) : (
+            <></>
         );
     }
 }
