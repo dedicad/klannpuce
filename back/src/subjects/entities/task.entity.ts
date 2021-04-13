@@ -1,3 +1,4 @@
+import { Advancement } from 'src/advancements/entities/advancement.entity';
 import {
   Entity,
   Column,
@@ -5,6 +6,7 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Subject } from './subject.entity';
 
@@ -27,6 +29,11 @@ export class Task {
   })
   @JoinColumn()
   subject: Subject;
+
+  @OneToMany(() => Advancement, (advancement) => advancement.taskId, {
+    eager: true,
+  })
+  advancements: Advancement[];
 
   /**
    * DB insert time.

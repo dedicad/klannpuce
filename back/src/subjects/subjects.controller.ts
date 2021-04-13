@@ -28,8 +28,8 @@ export class SubjectsController {
   }
 
   @Get()
-  findAll() {
-    return this.subjectsService.findAll();
+  findAll(@UserDecorator() user: User) {
+    return this.subjectsService.findAll(user);
   }
 
   @Get(':id')

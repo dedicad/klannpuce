@@ -1,8 +1,10 @@
+import { Advancement } from 'src/advancements/entities/advancement.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 export type Role = 'student' | 'teacher' | 'admin';
@@ -23,6 +25,11 @@ export class User {
 
   @Column({ length: 10, default: 'student' })
   role: Role;
+
+  @OneToMany(() => Advancement, (advancement) => advancement.userId, {
+    eager: false,
+  })
+  advancement: Advancement[];
 
   /**
    * DB insert time.
