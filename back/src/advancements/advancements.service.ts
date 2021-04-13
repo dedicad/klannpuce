@@ -23,7 +23,6 @@ export class AdvancementsService {
     const count = await this.advancementRepository.count({
       where: { taskId: createAdvancementDto.taskId, userId: user.id },
     });
-    console.log('count: ', count);
     if (count === 0) {
       // The task has not already been validated, we can validate it
       return this.advancementRepository.save(advancement);

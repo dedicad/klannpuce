@@ -18,7 +18,10 @@ export class AdvancementsController {
   constructor(private readonly advancementsService: AdvancementsService) {}
 
   @Post()
-  create(@Body() createAdvancementDto: CreateAdvancementDto, @UserDecorator() user: User) {
+  create(
+    @Body() createAdvancementDto: CreateAdvancementDto,
+    @UserDecorator() user: User,
+  ) {
     return this.advancementsService.create(createAdvancementDto, user);
   }
 
