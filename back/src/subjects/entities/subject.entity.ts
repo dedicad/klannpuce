@@ -18,11 +18,16 @@ export class Subject {
   @Column('varchar', { length: 500 })
   description: string;
 
+  @Column('varchar', { length: 60 })
+  author: string;
+
   @OneToMany((type) => Task, (task) => task.subject, {
     cascade: ['insert'],
     eager: true,
   })
   tasks: Task[];
+
+
 
   /**
    * DB insert time.

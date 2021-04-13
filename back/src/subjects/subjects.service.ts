@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
@@ -11,10 +12,12 @@ export class SubjectsService {
   constructor(
     @InjectRepository(Subject) private subjectRepository: Repository<Subject>,
   ) {}
-  create(createSubjectDto: CreateSubjectDto): Promise<Subject> {
+  create(createSubjectDto: CreateSubjectDto, user: User): Promise<Subject> {
     const subject = new Subject();
     subject.name = createSubjectDto.name;
     subject.description = createSubjectDto.description;
+    subject.author = user.name;
+
 
     subject.tasks = createSubjectDto.tasks.map((createTaskDto) => {
       const task = new Task();
@@ -23,18 +26,21 @@ export class SubjectsService {
       task.level = createTaskDto.level;
       return task;
     });
-
+    
     return this.subjectRepository.save(subject);
   }
 
   async findAll(): Promise<Subject[]> {
-    return await this.subjectRepository.find();
+    return await this.subjectRepository.find({
+      relations: ['tasks'],
+      select: ['name', 'description', 'author'],
+    });
   }
 
   async findOne(_id: number) {
     return await this.subjectRepository.find({
       relations: ['tasks'],
-      select: ['name', 'description'],
+      select: ['name', 'description', 'author'],
       where: [{ id: _id }],
     });
   }
