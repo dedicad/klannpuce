@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import './SubjectCard.css';
-import axios from '../../config/axios';
+import axios from 'axios';
 
 const theme = createMuiTheme({
     overrides: {
