@@ -31,6 +31,11 @@ export class SubjectsService {
     return this.subjectRepository.save(subject);
   }
 
+
+  async exists(name: string): Promise<boolean> {
+    return (await this.subjectRepository.count({ where: { name: name } })) > 0;
+  }
+
   async findAll(user: User): Promise<Subject[]> {
     const subjects = await this.subjectRepository.find({
       relations: ['tasks'],
