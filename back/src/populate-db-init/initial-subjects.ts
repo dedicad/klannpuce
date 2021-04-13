@@ -16,7 +16,7 @@ export const intrusionDetection = {
     tasks: [
         {name : "Je sais configurer Snort", description: "Je comprends les manipulations élémentaires sur un logiciel d'IDS type Snort", level: 1},
         {name : "Je sait configurer Prélude", description: "Je comprends les manipulations élémentaires sur un logiciel de type SIEM comme Prélude", level: 2},
-        {name : "J'ai déjà mis en place Snort dans un environnement de production", description: "", level: 3},
-        {name : "J'ai déjà mis en place Prélude dans un environnement de production", description: "", level: 4},
+        {name : "J'ai déjà mis en place Snort dans un environnement de prod", description: "", level: 3},
+        {name : "J'ai déjà mis en place Prélude dans un environnement de prod", description: "", level: 4},
     ]
 }
