@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateAdvancementDto } from './dto/create-advancement.dto';
 import { UpdateAdvancementDto } from './dto/update-advancement.dto';
@@ -11,21 +12,28 @@ export class AdvancementsService {
     @InjectRepository(Advancement)
     private advancementRepository: Repository<Advancement>,
   ) {}
-  create(createAdvancementDto: CreateAdvancementDto): Promise<Advancement> {
-    // Todo : It would be better to check if the taskId exists
-    // Todo : we should retrieve the userId directly from the auth Middleware
+  async create(
+    createAdvancementDto: CreateAdvancementDto,
+    user: User,
+  ): Promise<Advancement> {
     const advancement = new Advancement();
-    advancement.userId = createAdvancementDto.userId;
+    advancement.userId = user.id;
     advancement.taskId = createAdvancementDto.taskId;
 
-    return this.advancementRepository.save(advancement);
+    const count = await this.advancementRepository.count({
+      where: { taskId: createAdvancementDto.taskId, userId: user.id },
+    });
+    if (count === 0) {
+      // The task has not already been validated, we can validate it
+      return this.advancementRepository.save(advancement);
+    }
+    throw new HttpException('BadRequestException', HttpStatus.BAD_REQUEST);
   }
 
-  async findAll() {
-    return await this.advancementRepository
-      .find
-      // {      where: [{userId: }]} TODO : user userId from auth Middleware
-      ();
+  async findAll(user: User) {
+    return await this.advancementRepository.find({
+      where: [{ userId: user.id }],
+    });
   }
 
   findOne(id: number) {
@@ -36,8 +44,14 @@ export class AdvancementsService {
     return `This action updates a #${id} advancement`;
   }
 
-  remove(id: number) {
-    // Todo, we also need to check that the userId is the same one that come from the auth Middleware.
-    this.advancementRepository.delete(id);
+  async remove(id: number, user: User) {
+    const count = await this.advancementRepository.count({
+      where: { id: id, userId: user.id },
+    });
+    if (count > 0) {
+      // The task has been previously validated by this user (because it exists) so we can delete it
+      this.advancementRepository.delete(id);
+    }
+    throw new HttpException('BadRequestException', HttpStatus.BAD_REQUEST);
   }
 }

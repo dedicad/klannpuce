@@ -27,15 +27,14 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
-  async findAll(user: User): Promise<User[]> {
-    console.log('The connected user is :', user);
+  async findAll(): Promise<User[]> {
     return await this.usersRepository.find();
   }
 
   async findOne(_email: string): Promise<User> {
     return (
       await this.usersRepository.find({
-        select: ['name', 'email', 'role', 'passwordHash'],
+        select: ['id', 'name', 'email', 'role', 'passwordHash'],
         where: [{ email: _email }],
       })
     )[0];

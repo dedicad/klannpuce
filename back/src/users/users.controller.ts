@@ -6,19 +6,21 @@ import {
   Put,
   Delete,
   Param,
+  SetMetadata,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { UserDecorator } from './user.decorator';
+import { Roles } from 'src/auth/roles.decorators';
 
 @Controller('users')
 export class UsersController {
   constructor(private service: UsersService) {}
 
   @Get('')
-  getAll(@UserDecorator() user: User) {
-    return this.service.findAll(user);
+  getAll() {
+    return this.service.findAll();
   }
 
   @Get(':email')
@@ -27,6 +29,7 @@ export class UsersController {
   }
 
   @Post()
+  @Roles('student')
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.service.create(createUserDto);
   }

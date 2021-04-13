@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
-declare type role = 'student' | 'teacher';
+export type Role = 'student' | 'teacher' | 'admin';
 
 @Entity()
 export class User {
@@ -22,7 +22,7 @@ export class User {
   passwordHash: string;
 
   @Column({ length: 10, default: 'student' })
-  role: role;
+  role: Role;
 
   /**
    * DB insert time.
