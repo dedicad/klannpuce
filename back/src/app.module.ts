@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ModuleMetadata, Provider } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -9,6 +9,17 @@ import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 
+const activateAuthentication = true; // Todo : remove this line, it should only be used through development variable maybe.
+
+const providers = activateAuthentication
+  ? [
+      AppService,
+      {
+        provide: APP_GUARD,
+        useClass: JwtAuthGuard,
+      },
+    ]
+  : [AppService];
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
@@ -18,12 +29,6 @@ import { APP_GUARD } from '@nestjs/core';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-  ],
+  providers,
 })
 export class AppModule {}
