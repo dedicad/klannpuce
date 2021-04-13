@@ -73,7 +73,7 @@ export default function NewSubjectForm() {
 
         const config = {
             method: 'post',
-            url: 'http://localhost:8000/subjects',
+            url: 'subjects',
             headers: {
                 'Content-Type': 'application/json',
             },
