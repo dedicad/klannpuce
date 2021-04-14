@@ -64,7 +64,7 @@ function Login() {
                             required
                             className='form-textfield'
                             margin='normal'
-                            label='Password'
+                            label='Mot de passe'
                             type='password'
                             variant='outlined'
                             {...register('password')}
@@ -76,7 +76,7 @@ function Login() {
                             variant='contained'
                             color='primary'
                         >
-                            Sign in
+                            Se connecter
                         </Button>
                     </form>
                 </CardContent>
