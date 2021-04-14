@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Paper, TextField, Button, Typography, Grid, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Link } from 'react-router-dom';
 
 const axios = require('axios');
 
@@ -139,8 +140,19 @@ export default function NewSubjectForm() {
                             </Grid>
                         </Grid>
                     </form>
+
+                
                 </React.Fragment>
             </Paper>
+            <Link
+                    to={{
+                        pathname: '/cards',
+                    }}
+                >
+                    <Button variant='contained' color='primary'>
+                        Voir la liste des cartes
+                    </Button>
+                </Link>
         </main>
     )
 }
