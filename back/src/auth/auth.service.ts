@@ -14,7 +14,8 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.usersService.findOne(email);
-    if (!user)  throw new HttpException('BadRequestException', HttpStatus.BAD_REQUEST);
+    if (!user)
+      throw new HttpException('BadRequestException', HttpStatus.BAD_REQUEST);
     const isMatch = await bcrypt.compare(password, user?.passwordHash);
     if (isMatch) {
       const { passwordHash, ...result } = user;
