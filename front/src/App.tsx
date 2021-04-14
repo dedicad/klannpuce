@@ -10,7 +10,6 @@ import {
 import axiosConfig from './config/axiosConfig';
 
 import Login from './components/login/Login';
-import Navbar from './components/navbar/Navbar';
 import SubjectCard from './components/subjectCard/SubjectCard';
 import NewSubjectForm from './components/newSubjectForm/NewSubjectForm';
 
@@ -64,7 +63,6 @@ function App() {
             }}
         >
             <div className='App'>
-                login
                 <Router>
                     <Switch>
                         <Route path='/login'>
@@ -78,7 +76,7 @@ function App() {
                         />
 
                         <ProtectedRoute
-                            path='/card'
+                            path='/cards'
                             component={SubjectCard}
                             hasAdequateRole
                         />

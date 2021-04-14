@@ -8,6 +8,7 @@ const axios = require('axios');
 
 const useStyles = makeStyles((theme) => ({
     layout: {
+        height: '100vh',
         width: 'auto',
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
