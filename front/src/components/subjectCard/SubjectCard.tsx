@@ -3,12 +3,11 @@ import { PureComponent } from 'react';
 import {
     Card,
     CardContent,
-    Typography,
-    Grid,
-    CardActions,
-    Button,
     Checkbox,
+    Container,
+    Grid,
     Tooltip,
+    Typography,
 } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import './SubjectCard.css';
@@ -26,7 +25,8 @@ const theme = createMuiTheme({
         },
     },
 });
-interface SubjectCardProps {}
+
+interface SubjectCardProps { }
 
 interface Advancement {
     id: number;
@@ -142,50 +142,52 @@ class SubjectCard extends PureComponent<SubjectCardProps, SubjectCardState> {
         // Otherwise when send a request to uncheck
     }
 
-    tasks = this.subject.tasks.map((task, index) => {
-        return (
-            <li key={task.id}>
-                <Tooltip title={task.description}>
-                    <Checkbox
-                        color='primary'
-                        disableRipple
-                        onClick={() => this.toggleValidation(task.id, index)}
-                        checked={task.advancements.length > 0}
-                        disabled={this.state.disabled}
-                    />
-                </Tooltip>
-                {task.name}
-            </li>
-        );
-    });
-
     render() {
         return this.state.ready ? (
-            <Grid
-                className='full-height'
-                container
-                direction='row'
-                justify='center'
-                alignItems='center'
-            >
-                <Card className='subject-card'>
-                    <ThemeProvider theme={theme}>
-                        <CardContent>
-                            <Typography
-                                gutterBottom
-                                variant='h4'
-                                component='h2'
-                            >
-                                {this.subject.name}
-                            </Typography>
-                            <ul>{this.tasks}</ul>
-                        </CardContent>
-                    </ThemeProvider>
-                    <CardActions>
-                        <Button size='small'>Learn More</Button>
-                    </CardActions>
-                </Card>
-            </Grid>
+            <Container className="layout">
+                <Grid
+                    container
+                    spacing={2}
+                >
+                    {this.state.subjects.map(subject => {
+                        return (
+                            <Grid item xs={3}>
+                                <Card className='subject-card'>
+                                    <ThemeProvider theme={theme}>
+                                        <CardContent>
+                                            <Typography
+                                                gutterBottom
+                                                variant='h4'
+                                                component='h2'
+                                            >
+                                                {subject.name}
+                                            </Typography>
+                                            <ul>
+                                                {subject.tasks.map((task, index) => {
+                                                    return (
+                                                        <li key={task.id}>
+                                                            <Tooltip title={task.description}>
+                                                                <Checkbox
+                                                                    color='primary'
+                                                                    disableRipple
+                                                                    onClick={() => this.toggleValidation(task.id, index)}
+                                                                    checked={task.advancements.length > 0}
+                                                                    disabled={this.state.disabled}
+                                                                />
+                                                            </Tooltip>
+                                                            {task.name}
+                                                        </li>
+                                                    )
+                                                })}
+                                            </ul>
+                                        </CardContent>
+                                    </ThemeProvider>
+                                </Card>
+                            </Grid>
+                        )
+                    })}
+                </Grid>
+            </Container>
         ) : (
             <></>
         );

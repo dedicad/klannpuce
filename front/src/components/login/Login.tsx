@@ -43,45 +43,45 @@ function Login() {
     };
 
     return (
-        isLoggedIn ? <Redirect to="/card" /> :
-       ( <div className='login-div'>
-            <Card variant='outlined' className='login-card'>
-                <CardContent>
-                    <form
-                        className='login-form'
-                        onSubmit={handleSubmit(onSubmit)}
-                    >
-                        <TextField
-                            required
-                            id='email-textfield'
-                            margin='normal'
-                            type='email'
-                            label='email'
-                            variant='outlined'
-                            {...register('email')}
-                        />
-                        <TextField
-                            required
-                            className='form-textfield'
-                            margin='normal'
-                            label='Password'
-                            type='password'
-                            variant='outlined'
-                            {...register('password')}
-                        />
-                        <Button
-                            id='sign-in-button'
-                            type='submit'
-                            fullWidth
-                            variant='contained'
-                            color='primary'
+        isLoggedIn ? <Redirect to="/cards" /> :
+            (<div className='login-div'>
+                <Card variant='outlined' className='login-card'>
+                    <CardContent>
+                        <form
+                            className='login-form'
+                            onSubmit={handleSubmit(onSubmit)}
                         >
-                            Sign in
+                            <TextField
+                                required
+                                id='email-textfield'
+                                margin='normal'
+                                type='email'
+                                label='email'
+                                variant='outlined'
+                                {...register('email')}
+                            />
+                            <TextField
+                                required
+                                className='form-textfield'
+                                margin='normal'
+                                label='Password'
+                                type='password'
+                                variant='outlined'
+                                {...register('password')}
+                            />
+                            <Button
+                                id='sign-in-button'
+                                type='submit'
+                                fullWidth
+                                variant='contained'
+                                color='primary'
+                            >
+                                Sign in
                         </Button>
-                    </form>
-                </CardContent>
-            </Card>
-        </div>)
+                        </form>
+                    </CardContent>
+                </Card>
+            </div>)
     );
 }
 
