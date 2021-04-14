@@ -17,6 +17,7 @@ import { AuthContext, Role } from './config/auth';
 import ProtectedRoute from './components/ProtectedRoutes';
 import axios from 'axios';
 import { Button } from '@material-ui/core';
+import jwt_decode from 'jwt-decode';
 
 function App() {
     const token: string | null = localStorage.getItem('authToken');
@@ -29,11 +30,17 @@ function App() {
     const setToken = (authenticationToken: string): void => {
         localStorage.setItem('authToken', authenticationToken);
         setAuthToken(authenticationToken);
+
+        const decoded: any = jwt_decode(authenticationToken);
+        setRole(decoded.role);
     };
 
     if (token && token !== authToken) {
         setAuthToken(token);
         axios.defaults.headers.common.authorization = `bearer ${token}`;
+
+        const decoded: any = jwt_decode(token);
+        setRole(decoded.role);
     }
 
     const deconnect = () => {
@@ -72,14 +79,10 @@ function App() {
                         <ProtectedRoute
                             path='/form'
                             component={NewSubjectForm}
-                            hasAdequateRole
+                            teacherOnly
                         />
 
-                        <ProtectedRoute
-                            path='/cards'
-                            component={SubjectCard}
-                            hasAdequateRole
-                        />
+                        <ProtectedRoute path='/cards' component={SubjectCard} teacherOnly={false}/>
 
                         <Route path='/'>
                             <Redirect to='/login' />

@@ -14,6 +14,7 @@ import './SubjectCard.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import { AuthContext } from '../../config/auth';
 
 const theme = createMuiTheme({
     overrides: {
@@ -60,7 +61,12 @@ class SubjectCard extends PureComponent<SubjectCardProps, SubjectCardState> {
         ready: false,
     } as SubjectCardState;
 
+    static contextType = AuthContext;
+
     async componentDidMount() {
+        const auth = this.context;
+        console.log('auth : ', auth);
+        console.log('we passed');
         await axios
             .get('/subjects')
             .then((res: any) =>
@@ -199,16 +205,23 @@ class SubjectCard extends PureComponent<SubjectCardProps, SubjectCardState> {
                         );
                     })}
                 </Grid>
-
-                <Link
-                    to={{
-                        pathname: '/form',
-                    }}
-                >
-                    <Button variant='contained' color='primary' style={{marginTop: '20px'}}>
-                        Ajouter un nouveau sujet
-                    </Button>
-                </Link>
+                {this.context.role === 'teacher' ? (
+                    <Link
+                        to={{
+                            pathname: '/form',
+                        }}
+                    >
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            style={{ marginTop: '20px' }}
+                        >
+                            Ajouter un nouveau sujet
+                        </Button>
+                    </Link>
+                ) : (
+                    <> </>
+                )}
             </Container>
         ) : (
             <></>
