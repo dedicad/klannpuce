@@ -43,7 +43,7 @@ function Login() {
     };
 
     return (
-        isLoggedIn ? <Redirect to="/card" /> :
+        isLoggedIn ? <Redirect to="/cards" /> :
        ( <div className='login-div'>
             <Card variant='outlined' className='login-card'>
                 <CardContent>
