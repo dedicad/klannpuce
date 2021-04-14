@@ -12,6 +12,8 @@ import {
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import './SubjectCard.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 const theme = createMuiTheme({
     overrides: {
@@ -76,17 +78,17 @@ class SubjectCard extends PureComponent<SubjectCardProps, SubjectCardState> {
             this.setState({ disabled: true });
 
             try {
-                const advancement = (await axios.post('/advancements', {
-                    taskId: task.id,
-                })).data;
+                const advancement = (
+                    await axios.post('/advancements', {
+                        taskId: task.id,
+                    })
+                ).data;
                 const newSubjects = this.state.subjects.map(
                     (subject, index) => {
                         const newSubject = { ...subject };
                         if (index === subjectIndex) {
                             const newTasks = [...subject.tasks];
-                            newTasks[taskIndex].advancements.push(
-                                advancement
-                            );
+                            newTasks[taskIndex].advancements.push(advancement);
                             newSubject.tasks = newTasks;
                         }
                         return newSubject;
@@ -197,6 +199,16 @@ class SubjectCard extends PureComponent<SubjectCardProps, SubjectCardState> {
                         );
                     })}
                 </Grid>
+
+                <Link
+                    to={{
+                        pathname: '/form',
+                    }}
+                >
+                    <Button variant='contained' color='primary' style={{marginTop: '20px'}}>
+                        Ajouter un nouveau sujet
+                    </Button>
+                </Link>
             </Container>
         ) : (
             <></>
