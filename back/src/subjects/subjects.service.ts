@@ -34,7 +34,7 @@ export class SubjectsService {
   async findAll(user: User): Promise<Subject[]> {
     const subjects = await this.subjectRepository.find({
       relations: ['tasks'],
-      select: ['name', 'description', 'author'],
+      select: ['name', 'description', 'author', 'id'],
     });
     // Not optimal but I had trouble realizing it fully with TypeOrm
     const advancements = (await this.advancementsService.findAll(user)).map(
@@ -59,7 +59,7 @@ export class SubjectsService {
   async findOne(_id: number) {
     return await this.subjectRepository.find({
       relations: ['tasks'],
-      select: ['name', 'description', 'author'],
+      select: ['name', 'description', 'author', 'id'],
       where: [{ id: _id }],
     });
   }
