@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useAuth } from '../../config/auth';
 import { Redirect } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+
 
 function Login() {
     // Form
@@ -32,7 +34,8 @@ function Login() {
                 axios.defaults.headers.common[
                     'Authorization'
                 ] = `bearer ${access_token}`;
-
+                const decoded: any = jwt_decode(access_token);
+                setContextRole(decoded.role);
                 setLoggedIn(true);
 
                 console.log(`Access Token: ${access_token}`);
