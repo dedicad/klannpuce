@@ -20,6 +20,7 @@ services:
             - 8000:8000
         volumes:
             - ./back:/usr/src/app
+            - /usr/src/app/node_modules
         depends_on:
             - db
 
@@ -30,3 +31,6 @@ services:
             - 3000:3000
         volumes:
             - ./front:/usr/src/app
+            - /usr/src/app/node_modules
+
+
