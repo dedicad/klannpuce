@@ -32,9 +32,9 @@ async function bootstrap() {
   await upsertUser(userService, student);
   await upsertUser(userService, teacher);
 
-//   const subjetService = app.get(SubjectsService);
+  //   const subjetService = app.get(SubjectsService);
 
-//   await upsertSubject(subjetService, reverseEngineering);
-//   await upsertSubject(subjetService, intrusionDetection);
+  //   await upsertSubject(subjetService, reverseEngineering);
+  //   await upsertSubject(subjetService, intrusionDetection);
 }
 bootstrap();
