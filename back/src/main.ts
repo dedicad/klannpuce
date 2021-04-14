@@ -34,7 +34,7 @@ async function bootstrap() {
 
   const subjetService = app.get(SubjectsService);
 
-  await upsertSubject(subjetService, reverseEngineering);
-  await upsertSubject(subjetService, intrusionDetection);
+  // await upsertSubject(subjetService, reverseEngineering);
+  // await upsertSubject(subjetService, intrusionDetection);
 }
 bootstrap();
