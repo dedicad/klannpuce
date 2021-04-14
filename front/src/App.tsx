@@ -82,7 +82,7 @@ function App() {
                         />
 
                         <Route path='/'>
-                            <Redirect to='/404' />
+                            <Redirect to='/login' />
                         </Route>
                     </Switch>
                 </Router>
