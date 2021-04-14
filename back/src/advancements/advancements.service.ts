@@ -51,7 +51,8 @@ export class AdvancementsService {
     if (count > 0) {
       // The task has been previously validated by this user (because it exists) so we can delete it
       this.advancementRepository.delete(id);
+    } else {
+      throw new HttpException('BadRequestException', HttpStatus.BAD_REQUEST);
     }
-    throw new HttpException('BadRequestException', HttpStatus.BAD_REQUEST);
   }
 }
